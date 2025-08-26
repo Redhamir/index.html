@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Programme Musculation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .profile-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .tab-btn {
+            padding: 12px 15px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            flex: 1;
+            margin: 0 5px;
+            min-width: 70px;
+            font-size: 0.9rem;
+        }
+        
+        .tab-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+            padding: 0 20px 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .card-month1 {
+            border-left-color: #3498db;
+        }
+        
+        .card-month2 {
+            border-left-color: #9b59b6;
+        }
+        
+        .card-month3 {
+            border-left-color: #e74c3c;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h3 {
+            color: #3498db;
+            margin: 20px 0 12px 0;
+            font-size: 1.1rem;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        @media (min-width: 480px) {
+            .exercise-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+        
+        .exercise-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+        
+        .exercise-card h4 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .exercise-card h4 i {
+            margin-right: 8px;
+        }
+        
+        .exercise-details {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .exercise-detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #7f8c8d;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            background: #ecf0f1;
+            border-radius: 20px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+            font-size: 0.7rem;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-month1 {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+        
+        .progress-month2 {
+            background: linear-gradient(90deg, #9b59b6, #8e44ad);
+        }
+        
+        .progress-month3 {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 12px;
+            border-left: 4px solid #f39c12;
+            margin: 12px 0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 8px 5px;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover, .btn:active {
+            background: #2980b9;
+        }
+        
+        .month-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .tag-month1 {
+            background-color: #3498db;
+        }
+        
+        .tag-month2 {
+            background-color: #9b59b6;
+        }
+        
+        .tag-month3 {
+            background-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏋️‍♂️ Mon Programme Musculation</h1>
+            <p>15 ans • 1.95m • 80kg • Salle de sport</p>
+            
+            <div class="profile-badges">
+                <div class="badge">🎯 Prise de Masse</div>
+                <div class="badge">📅 3-4 séances/semaine</div>
+            </div>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="profil">Profil</button>
+            <button class="tab-btn" data-tab="month1">Mois 1</button>
+            <button class="tab-btn" data-tab="month2">Mois 2</button>
+            <button class="tab-btn" data-tab="month3">Mois 3</button>
+        </div>
+
+        <div id="profil" class="tab-content active">
+            <div class="card">
+                <h2>📊 Mon Profil</h2>
+                
+                <div class="exercise-card">
+                    <h4><i class="fas fa-user"></i> Informations Personnelles</h4>
+                    <div class="exercise-details">
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Âge:</span>
+                            <span class="detail-value">15 ans</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Taille:</span>
+                            <span class="detail-value">1.95m</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Poids:</span>
+                            <span class="detail-value">80kg</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Niveau:</span>
+                            <span class="detail-value">Intermédiaire</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercise-card">
+                    <h4><i class="fas fa-dumbbell"></i> Objectifs</h4>
+                    <div class="exercise-details">
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Principal:</span>
+                            <span class="detail-value">Prise de masse</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Disponibilité:</span>
+                            <span class="detail-value">3-4 séances/semaine</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Équipement:</span>
+                            <span class="detail-value">Salle de sport complète</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📅 Planning Hebdomadaire</h2>
+                
+                <div class="exercise-card">
+                    <h4><i class="fas fa-calendar-alt"></i> Structure de la semaine</h4>
+                    <div class="exercise-details">
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Lundi:</span>
+                            <span class="detail-value">Upper Body Volume</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Mardi:</span>
+                            <span class="detail-value">Lower Body Volume</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Mercredi:</span>
+                            <span class="detail-value">Repos</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Jeudi:</span>
+                            <span class="detail-value">Upper Body Force</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Vendredi:</span>
+                            <span class="detail-value">Lower Body Force</span>
+                        </div>
+                        <div class="exercise-detail-item">
+                            <span class="detail-label">Week-end:</span>
+                            <span class="detail-value">Repos actif</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="month1" class="tab-content">
+            <div class="card card-month1">
+                <h2><span class="month-tag tag-month1">Mois 1</span> Adaptation Technique</h2>
+                
+                <h3>Full Body (4 séances/semaine)</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-fire"></i> Échauffement</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Durée:</span>
+                                <span class="detail-value">10 min</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Contenu:</span>
+                                <span class="detail-value">Vélo + rotations articulaires</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Presse à cuisses</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">3</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">12</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Intensité:</span>
+                                <span class="detail-value">60-70% RM</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-compress-alt"></i> Écarté machine</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">3</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">15</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Type:</span>
+                                <span class="detail-value">Pec Deck</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands"></i> Tirage poitrine</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">3</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">12</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">60s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-wind"></i> Leg curl</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">3</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">15</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">60s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands-helping"></i> Développé épaules</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">3</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">12</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">60s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-month1">
+                <h2><span class="month-tag tag-month1">Mois 1</span> Objectifs</h2>
+                
+                <div class="progress-container">
+                    <h3>Progression</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-month1" style="width: 33%;">Semaines 1-4</div>
+                    </div>
+                    <p><strong>Focus:</strong> Apprentissage des mouvements, charges modérées</p>
+                </div>
+                
+                <div class="highlight">
+                    <h4>🎯 Priorité du Mois 1</h4>
+                    <p>Maîtriser la technique de tous les exercices avant d'augmenter les charges</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="month2" class="tab-content">
+            <div class="card card-month2">
+                <h2><span class="month-tag tag-month2">Mois 2</span> Phase Hypertrophie</h2>
+                
+                <h3>Lundi - Upper Body (1h30)</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-compress-alt"></i> Écarté machine</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">12</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Type:</span>
+                                <span class="detail-value">Pec Deck</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands"></i> Tirage poitrine</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">10</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">90s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands-helping"></i> Développé épaules</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">10</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">90s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Mardi - Lower Body (1h30)</h3>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Presse à cuisses</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">10</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">90s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-shoe-prints"></i> Hack squat</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">10</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">90s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-wind"></i> Leg extension</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">3</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">12</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">60s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-month2">
+                <h2><span class="month-tag tag-month2">Mois 2</span> Objectifs</h2>
+                
+                <div class="progress-container">
+                    <h3>Progression</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-month2" style="width: 66%;">Semaines 5-8</div>
+                    </div>
+                    <p><strong>Focus:</strong> Volume musculaire, augmentation progressive des charges</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="month3" class="tab-content">
+            <div class="card card-month3">
+                <h2><span class="month-tag tag-month3">Mois 3</span> Phase Intensification</h2>
+                
+                <h3>Lundi - Upper Body Lourd</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-compress-alt"></i> Écarté machine</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">5</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">10</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Intensité:</span>
+                                <span class="detail-value">Charge max contrôlée</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands"></i> Tirage poitrine</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">8</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">120s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands-helping"></i> Développé épaules</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">8</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">120s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Mardi - Lower Body Lourd</h3>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Presse à cuisses</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">5</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">6-8</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">120s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-shoe-prints"></i> Hack squat</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">8</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">120s</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-wind"></i> Leg curl</h4>
+                        <div class="exercise-details">
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Séries:</span>
+                                <span class="detail-value">4</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Répétitions:</span>
+                                <span class="detail-value">10</span>
+                            </div>
+                            <div class="exercise-detail-item">
+                                <span class="detail-label">Récupération:</span>
+                                <span class="detail-value">90s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-month3">
+                <h2><span class="month-tag tag-month3">Mois 3</span> Objectifs</h2>
+                
+                <div class="progress-container">
+                    <h3>Progression</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-month3" style="width: 100%;">Semaines 9-12</div>
+                    </div>
+                    <p><strong>Focus:</strong> Force maximale, charges lourdes contrôlées</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📅 Programme conçu pour une progression sur 12 semaines | 🏋️‍♂️ Adapté aux machines de salle de sport</p>
+            <p>⚠️ Consulter un coach pour la correction technique des exercices</p>
+        </div>
+    </div>
+
+    <script>
+        // Gestion des onglets
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Désactiver tous les onglets
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Activer l'onglet sélectionné
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
