@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Programme Musculation - Prise de Masse</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Guide d'Exercice - Pec Deck</title>
     <style>
         * {
             margin: 0;
@@ -14,287 +13,153 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #f8fafc;
-            line-height: 1.6;
-            padding: 20px;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: rgba(30, 41, 59, 0.9);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            padding: 20px;
+            margin-top: 20px;
         }
         
         header {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            padding: 20px;
             text-align: center;
-            padding: 30px 20px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .user-info {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: rgba(255, 255, 255, 0.15);
-            padding: 10px 20px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .goal {
-            display: inline-block;
-            background-color: #10b981;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
-        }
-        
-        .program-overview {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .overview-card {
-            background: linear-gradient(135deg, #334155 0%, #475569 100%);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .overview-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .overview-card i {
-            font-size: 2.5rem;
-            color: #60a5fa;
-            margin-bottom: 15px;
-        }
-        
-        .overview-card h3 {
-            font-size: 1.5rem;
+            font-size: 28px;
             margin-bottom: 10px;
-            color: #e2e8f0;
         }
         
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .tab {
-            padding: 15px 25px;
-            background-color: #475569;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            font-size: 1.1rem;
-            text-align: center;
-            min-width: 120px;
-        }
-        
-        .tab.active {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.4);
-        }
-        
-        .tab:hover:not(.active) {
-            background-color: #5f718a;
-        }
-        
-        .month-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .month-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .month-header {
-            background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
-            border-radius: 15px;
+        .content {
             padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .month-title {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .days-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        
-        .day-card {
-            background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .day-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #93c5fd;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #4b5563;
-        }
-        
-        .exercise-card {
-            background-color: #1f2937;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid #3b82f6;
-        }
-        
-        .exercise-title {
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #93c5fd;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .exercise-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
         }
         
         .exercise-info {
+            display: none;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #4ca1af;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .info-list {
+            list-style-type: none;
+        }
+        
+        .info-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-list strong {
+            color: #2c3e50;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .icon-selection {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .icon-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background-color: #374151;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            background-color: #e9e9e9;
         }
         
-        .notes {
-            margin-top: 25px;
-            padding: 20px;
-            background-color: #1e3a8a;
-            border-radius: 12px;
-            font-size: 1rem;
-            border-left: 4px solid #60a5fa;
+        .icon-option:hover {
+            transform: scale(1.1);
         }
         
-        .pec-deck-section {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 40px 0;
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        .selected {
+            border: 3px solid #4ca1af;
+            box-shadow: 0 0 10px rgba(76, 161, 175, 0.5);
         }
         
-        .pec-deck-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #93c5fd;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .pec-deck-tips {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .tip-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .footer {
+        footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 30px;
-            color: #cbd5e1;
-            font-size: 1rem;
-            border-top: 1px solid #475569;
-            background-color: rgba(30, 41, 59, 0.7);
-            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin-top: 20px;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 10px;
+            }
+            
             h1 {
-                font-size: 2rem;
+                font-size: 24px;
             }
             
-            .program-overview {
-                grid-template-columns: 1fr;
-            }
-            
-            .tab {
-                padding: 12px 20px;
-                font-size: 1rem;
-                min-width: 100px;
-            }
-            
-            .days-container {
-                grid-template-columns: 1fr;
+            .btn {
+                width: 90%;
+                font-size: 16px;
             }
         }
     </style>
@@ -302,385 +167,68 @@
 <body>
     <div class="container">
         <header>
-            <h1>Mon Programme Musculation</h1>
-            <div class="user-info">
-                <div class="info-item">
-                    <i class="fas fa-user"></i>
-                    <span>15 ans • 1.95m • 80kg</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-dumbbell"></i>
-                    <span>Salle de sport</span>
-                </div>
-            </div>
-            <div class="goal">Prise de Masse • 4 séances/semaine</div>
+            <h1>Guide d'Exercice de Musculation</h1>
+            <p>Écarté Machine (Pec Deck) - Technique d'exécution</p>
         </header>
         
-        <div class="program-overview">
-            <div class="overview-card">
-                <i class="fas fa-dumbbell"></i>
-                <h3>Mois 1: Adaptation</h3>
-                <p>Full Body - Maîtrise des mouvements</p>
-            </div>
-            <div class="overview-card">
-                <i class="fas fa-fire"></i>
-                <h3>Mois 2: Hypertrophie</h3>
-                <p>Split Upper/Lower - Développement musculaire</p>
-            </div>
-            <div class="overview-card">
-                <i class="fas fa-bolt"></i>
-                <h3>Mois 3: Intensification</h3>
-                <p>Split Avancé - Maximisation des gains</p>
-            </div>
-        </div>
-        
-        <div class="tabs">
-            <div class="tab active" data-month="month1">Mois 1</div>
-            <div class="tab" data-month="month2">Mois 2</div>
-            <div class="tab" data-month="month3">Mois 3</div>
-        </div>
-        
-        <div id="month1" class="month-content active">
-            <div class="month-header">
-                <h2 class="month-title"><i class="fas fa-calendar-alt"></i> Mois 1 - Adaptation Technique</h2>
-                <p>Phase d'adaptation à l'entraînement, apprentissage des mouvements de base sur machines et développement de la technique.</p>
+        <div class="content">
+            <button class="btn" onclick="toggleExercise()">Afficher les détails de l'exercice</button>
+            
+            <div id="exerciseInfo" class="exercise-info">
+                <h2 class="info-title">Technique d'exécution - Écarté Machine (Pec Deck)</h2>
+                <ul class="info-list">
+                    <li><strong>Réglages</strong><br>Réglez la hauteur du siège pour que les poignées soient au niveau de votre poitrine</li>
+                    <li><strong>Posture</strong><br>Dos bien collé au dossier, pieds à plat, épaules basses</li>
+                    <li><strong>Mouvement</strong><br>Phase concentrique: expirez en rapprochant les bras. Phase excentrique: inspirez en contrôlant (3 secondes)</li>
+                    <li><strong>Points de vigilance</strong><br>Ne pas utiliser l'élan, mouvement strict et contrôlé. Aller jusqu'à la sensation d'étirement sans douleur.</li>
+                </ul>
             </div>
             
-            <div class="days-container">
-                <div class="day-card">
-                    <h3 class="day-title"><i class="fas fa-dumbbell"></i> Lundi - Full Body</h3>
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-fire"></i> Échauffement</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>10 min vélo + rotations articulaires</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-running"></i> Presse à cuisses</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 12 reps (60-70% RM)</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-compress-alt"></i> Écarté machine (Pec Deck)</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 15 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-hands"></i> Tirage poitrine machine</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 12 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-hands-helping"></i> Développé épaules machine</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 12 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-dumbbell"></i> Curl biceps machine</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 15 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 45 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-dumbbell"></i> Extension triceps</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 15 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 45 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-heart"></i> Étirements</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>10 min</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="day-card">
-                    <h3 class="day-title"><i class="fas fa-dumbbell"></i> Mardi - Full Body</h3>
-                    <p>Même programme que le lundi. Priorité à l'exécution technique parfaite avant d'augmenter les charges.</p>
-                </div>
-                
-                <div class="day-card">
-                    <h3 class="day-title"><i class="fas fa-dumbbell"></i> Jeudi - Full Body</h3>
-                    <p>Même programme que le lundi. Augmentation progressive des charges si la technique est maîtrisée.</p>
-                </div>
-                
-                <div class="day-card">
-                    <h3 class="day-title"><i class="fas fa-dumbbell"></i> Vendredi - Full Body</h3>
-                    <p>Même programme que le lundi. Focus sur la contraction musculaire et l'amplitude des mouvements.</p>
+            <div class="icon-selection">
+                <h2 class="info-title">Choisir l'icône de l'application</h2>
+                <p>Sélectionnez une icône pour personnaliser votre application:</p>
+                <div class="icon-options">
+                    <div class="icon-option" onclick="selectIcon(this)">💪</div>
+                    <div class="icon-option" onclick="selectIcon(this)">🏋️</div>
+                    <div class="icon-option" onclick="selectIcon(this)">🔥</div>
+                    <div class="icon-option" onclick="selectIcon(this)">📱</div>
+                    <div class="icon-option" onclick="selectIcon(this)">❤️</div>
                 </div>
             </div>
-        </div>
-        
-        <div id="month2" class="month-content">
-            <div class="month-header">
-                <h2 class="month-title"><i class="fas fa-calendar-alt"></i> Mois 2 - Hypertrophie</h2>
-                <p>Augmentation progressive des charges et du volume d'entraînement. Split Upper/Lower avec focus sur le développement musculaire.</p>
-            </div>
-            
-            <div class="days-container">
-                <div class="day-card">
-                    <h3 class="day-title"><i class="fas fa-dumbbell"></i> Lundi - Upper Body</h3>
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-fire"></i> Échauffement</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>10 min vélo + mobilité épaules</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-compress-alt"></i> Écarté machine (Pec Deck)</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>4 séries × 12 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-hands"></i> Tirage poitrine machine</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>4 séries × 10 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-hands-helping"></i> Développé épaules machine</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>4 séries × 10 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-dumbbell"></i> Curl biceps machine</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 12 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 45 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-dumbbell"></i> Extension triceps</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 12 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 45 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="day-card">
-                    <h3 class="day-title"><i class="fas fa-running"></i> Mardi - Lower Body</h3>
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-fire"></i> Échauffement</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>10 min vélo + mobilité hanches</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-running"></i> Presse à cuisses</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>4 séries × 10 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 90 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-running"></i> Hack squat</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>4 séries × 10 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 90 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-running"></i> Leg extension</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>3 séries × 12 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise-card">
-                        <h4 class="exercise-title"><i class="fas fa-running"></i> Leg curl</h4>
-                        <div class="exercise-details">
-                            <div class="exercise-info">
-                                <i class="fas fa-chart-line"></i>
-                                <span>4 séries × 10 reps</span>
-                            </div>
-                            <div class="exercise-info">
-                                <i class="fas fa-clock"></i>
-                                <span>Repos 60 sec</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="pec-deck-section">
-            <h3><i class="fas fa-star"></i> Technique d'exécution - Écarté Machine (Pec Deck)</h3>
-            <div class="pec-deck-tips">
-                <div class="tip-card">
-                    <h4><i class="fas fa-cog"></i> Réglages</h4>
-                    <p>Réglez la hauteur du siège pour que les poignées soient au niveau de votre poitrine</p>
-                </div>
-                <div class="tip-card">
-                    <h4><i class="fas fa-posture"></i> Posture</h4>
-                    <p>Dos bien collé au dossier, pieds à plat, épaules basses</p>
-                </div>
-                <div class="tip-card">
-                    <h4><i class="fas fa-compress-alt"></i> Mouvement</h4>
-                    <p>Phase concentrique: expirez en rapprochant les bras. Phase excentrique: inspirez en contrôlant (3 secondes)</p>
-                </div>
-                <div class="tip-card">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Points de vigilance</h4>
-                    <p>Ne pas utiliser l'élan, mouvement strict et contrôlé. Aller jusqu'à la sensation d'étirement sans douleur.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>Programme conçu pour une prise de masse efficace - Respectez les temps de repos et la progression des charges</p>
-            <p>© 2023 - Programme Musculation - Focus Sécurité & Isolation</p>
         </div>
     </div>
+    
+    <footer>
+        <p>Application de suivi d'entraînement - © 2023</p>
+    </footer>
 
     <script>
-        // Script pour la navigation entre les onglets
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.tab');
-            const monthContents = document.querySelectorAll('.month-content');
+        function toggleExercise() {
+            const exerciseInfo = document.getElementById('exerciseInfo');
+            const button = document.querySelector('.btn');
             
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Désactiver tous les onglets et contenus
-                    tabs.forEach(t => t.classList.remove('active'));
-                    monthContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Activer l'onglet cliqué
-                    tab.classList.add('active');
-                    
-                    // Afficher le contenu correspondant
-                    const monthId = tab.getAttribute('data-month');
-                    document.getElementById(monthId).classList.add('active');
-                });
-            });
-        });
+            if (exerciseInfo.style.display === 'block') {
+                exerciseInfo.style.display = 'none';
+                button.textContent = 'Afficher les détails de l\'exercice';
+            } else {
+                exerciseInfo.style.display = 'block';
+                button.textContent = 'Masquer les détails de l\'exercice';
+            }
+        }
+        
+        function selectIcon(element) {
+            // Retirer la sélection précédente
+            const selected = document.querySelector('.icon-option.selected');
+            if (selected) {
+                selected.classList.remove('selected');
+            }
+            
+            // Ajouter la sélection à l'élément cliqué
+            element.classList.add('selected');
+            
+            // Afficher une confirmation
+            alert('Icône sélectionnée: ' + element.textContent + '\nCette icône sera utilisée pour votre application.');
+        }
     </script>
 </body>
 </html>
