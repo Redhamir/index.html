@@ -3,231 +3,1157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide d'Exercice - Pec Deck</title>
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mon Programme Muscu">
+    <title>Mon Programme Musculation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #1e293b;
+            --accent: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --month1: #3b82f6;
+            --month2: #8b5cf6;
+            --month3: #ec4899;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--secondary);
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            color: #333;
+            max-width: 100%;
+            overflow-x: hidden;
         }
         
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            margin-top: 20px;
+        .app-container {
+            max-width: 100%;
+            padding: 15px;
+            margin: 0 auto;
         }
         
-        header {
-            background: linear-gradient(to right, #2c3e50, #4ca1af);
-            color: white;
-            padding: 20px;
+        .header {
             text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px 15px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            position: relative;
         }
         
-        h1 {
-            font-size: 28px;
+        .header h1 {
+            font-size: 1.7rem;
             margin-bottom: 10px;
+            font-weight: 700;
         }
         
-        .content {
-            padding: 25px;
+        .profile-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
         }
         
-        .exercise-info {
-            display: none;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            padding: 20px;
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 25px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 8px;
+            gap: 8px;
         }
         
-        .info-title {
-            color: #2c3e50;
-            border-bottom: 2px solid #4ca1af;
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab-btn {
+            padding: 14px 16px;
+            background: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            flex: 1;
+            min-width: 80px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+        
+        .card-month1 {
+            border-left-color: var(--month1);
+        }
+        
+        .card-month2 {
+            border-left-color: var(--month2);
+        }
+        
+        .card-month3 {
+            border-left-color: var(--month3);
+        }
+        
+        .card-conseils {
+            border-left-color: var(--success);
+        }
+        
+        h2 {
+            color: var(--secondary);
+            font-size: 1.4rem;
+            margin-bottom: 18px;
             padding-bottom: 10px;
-            margin-bottom: 15px;
-            font-size: 20px;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 700;
         }
         
-        .info-list {
-            list-style-type: none;
+        h3 {
+            color: var(--primary);
+            margin: 22px 0 15px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
         
-        .info-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin: 18px 0;
         }
         
-        .info-list li:last-child {
-            border-bottom: none;
+        @media (min-width: 480px) {
+            .exercise-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
         }
         
-        .info-list strong {
-            color: #2c3e50;
+        .exercise-card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+        }
+        
+        .exercise-card h4 {
+            margin: 0 0 10px 0;
+            color: var(--secondary);
+            font-size: 1.05rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .exercise-card h4 i {
+            color: var(--primary);
+        }
+        
+        .exercise-card p {
+            color: var(--gray);
+            font-size: 0.92rem;
+            margin-bottom: 8px;
+        }
+        
+        .exercise-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .calories {
+            background: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            margin: 22px 0;
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 20px;
+            height: 22px;
+            margin: 12px 0;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 22px;
+            font-size: 0.75rem;
+            transition: width 0.8s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        
+        .progress-month1 {
+            background: linear-gradient(90deg, var(--month1), #2563eb);
+        }
+        
+        .progress-month2 {
+            background: linear-gradient(90deg, var(--month2), #7c3aed);
+        }
+        
+        .progress-month3 {
+            background: linear-gradient(90deg, var(--month3), #db2777);
+        }
+        
+        .highlight {
+            background: linear-gradient(to right, #fff3cd, #ffeaa7);
+            padding: 16px;
+            border-left: 4px solid var(--warning);
+            margin: 15px 0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .highlight h4 {
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+        
+        .highlight p {
+            color: #856404;
+            margin: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding: 20px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
         }
         
         .btn {
-            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            display: inline-block;
+            background: var(--primary);
             color: white;
-            border: none;
-            padding: 14px 25px;
-            font-size: 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin: 20px auto;
-            width: 80%;
-            max-width: 300px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .icon-selection {
-            background-color: #f9f9f9;
+            padding: 14px 24px;
             border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 6px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
         }
         
-        .icon-options {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 15px;
+        .btn:hover, .btn:active {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
         }
         
-        .icon-option {
-            width: 60px;
-            height: 60px;
+        .month-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 14px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .tag-month1 {
+            background-color: var(--month1);
+        }
+        
+        .tag-month2 {
+            background-color: var(--month2);
+        }
+        
+        .tag-month3 {
+            background-color: var(--month3);
+        }
+        
+        .install-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 42px;
+            height: 42px;
+            color: white;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 24px;
-            background-color: #e9e9e9;
+            backdrop-filter: blur(5px);
         }
         
-        .icon-option:hover {
+        .install-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
             transform: scale(1.1);
         }
         
-        .selected {
-            border: 3px solid #4ca1af;
-            box-shadow: 0 0 10px rgba(76, 161, 175, 0.5);
+        /* Styles pour PWA */
+        @media all and (display-mode: standalone) {
+            body {
+                padding-top: env(safe-area-inset-top);
+            }
+            
+            .header {
+                border-radius: 0;
+                margin-bottom: 10px;
+            }
+            
+            .install-btn {
+                display: none !important;
+            }
         }
         
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: white;
-            margin-top: 20px;
+        .exercise-detail {
+            display: none;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.92rem;
+            color: var(--gray);
+            border-left: 3px solid var(--primary);
         }
         
+        .exercise-card.active .exercise-detail {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 200px; }
+        }
+        
+        .toggle-detail {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0;
+        }
+        
+        .toggle-detail i {
+            transition: transform 0.3s ease;
+        }
+        
+        .exercise-card.active .toggle-detail i {
+            transform: rotate(180deg);
+        }
+        
+        /* Amélioration responsive */
         @media (max-width: 600px) {
-            .container {
-                border-radius: 10px;
+            .card {
+                padding: 18px;
             }
             
-            h1 {
-                font-size: 24px;
+            .header h1 {
+                font-size: 1.5rem;
             }
             
-            .btn {
-                width: 90%;
-                font-size: 16px;
+            .tab-btn {
+                padding: 12px 10px;
+                font-size: 0.85rem;
+                min-width: 70px;
             }
+        }
+        
+        /* Installation instructions */
+        .install-instructions {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .install-instructions.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        .close-instructions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Guide d'Exercice de Musculation</h1>
-            <p>Écarté Machine (Pec Deck) - Technique d'exécution</p>
-        </header>
-        
-        <div class="content">
-            <button class="btn" onclick="toggleExercise()">Afficher les détails de l'exercice</button>
+    <div class="app-container">
+        <div class="header">
+            <h1>🏋️‍♂️ Mon Programme Muscu</h1>
+            <p>15 ans • 1.95m • 80kg</p>
             
-            <div id="exerciseInfo" class="exercise-info">
-                <h2 class="info-title">Technique d'exécution - Écarté Machine (Pec Deck)</h2>
-                <ul class="info-list">
-                    <li><strong>Réglages</strong><br>Réglez la hauteur du siège pour que les poignées soient au niveau de votre poitrine</li>
-                    <li><strong>Posture</strong><br>Dos bien collé au dossier, pieds à plat, épaules basses</li>
-                    <li><strong>Mouvement</strong><br>Phase concentrique: expirez en rapprochant les bras. Phase excentrique: inspirez en contrôlant (3 secondes)</li>
-                    <li><strong>Points de vigilance</strong><br>Ne pas utiliser l'élan, mouvement strict et contrôlé. Aller jusqu'à la sensation d'étirement sans douleur.</li>
-                </ul>
+            <div class="profile-badges">
+                <div class="badge">🎯 Prise de Masse</div>
+                <div class="badge">📅 4 séances/semaine</div>
             </div>
             
-            <div class="icon-selection">
-                <h2 class="info-title">Choisir l'icône de l'application</h2>
-                <p>Sélectionnez une icône pour personnaliser votre application:</p>
-                <div class="icon-options">
-                    <div class="icon-option" onclick="selectIcon(this)">💪</div>
-                    <div class="icon-option" onclick="selectIcon(this)">🏋️</div>
-                    <div class="icon-option" onclick="selectIcon(this)">🔥</div>
-                    <div class="icon-option" onclick="selectIcon(this)">📱</div>
-                    <div class="icon-option" onclick="selectIcon(this)">❤️</div>
+            <button class="install-btn" id="installButton">＋</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="profil">Profil</button>
+            <button class="tab-btn" data-tab="month1">Mois 1</button>
+            <button class="tab-btn" data-tab="month2">Mois 2</button>
+            <button class="tab-btn" data-tab="month3">Mois 3</button>
+            <button class="tab-btn" data-tab="conseils">Conseils</button>
+        </div>
+
+        <div id="profil" class="tab-content active">
+            <div class="card">
+                <h2>📊 Mon Profil</h2>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4>👤 Âge</h4>
+                        <p>15 ans</p>
+                        <div class="exercise-meta">
+                            <span>Objectif: Développement progressif</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>📏 Taille/Poids</h4>
+                        <p>1.95m / 80kg</p>
+                        <div class="exercise-meta">
+                            <span>Objectif: Prise de masse musculaire</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>📈 Niveau</h4>
+                        <p>Intermédiaire</p>
+                        <div class="exercise-meta">
+                            <span>Objectif: Adaptation technique</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>📅 Disponibilité</h4>
+                        <p>4 séances/semaine</p>
+                        <div class="exercise-meta">
+                            <span>Objectif: Consistance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-structure">
+                <h2>📅 Planning Hebdomadaire</h2>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4>🏋️‍♂️ Lundi</h4>
+                        <p>Full Body</p>
+                        <div class="exercise-meta">
+                            <span>Durée: 1h15</span>
+                            <span class="calories">≈ 550 kcal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>🦵 Mardi</h4>
+                        <p>Full Body</p>
+                        <div class="exercise-meta">
+                            <span>Durée: 1h15</span>
+                            <span class="calories">≈ 550 kcal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>🧘‍♂️ Mercredi</h4>
+                        <p>Repos complet</p>
+                        <div class="exercise-meta">
+                            <span>Récupération active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>💪 Jeudi</h4>
+                        <p>Full Body</p>
+                        <div class="exercise-meta">
+                            <span>Durée: 1h15</span>
+                            <span class="calories">≈ 550 kcal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>🏃‍♂️ Vendredi</h4>
+                        <p>Full Body</p>
+                        <div class="exercise-meta">
+                            <span>Durée: 1h15</span>
+                            <span class="calories">≈ 550 kcal</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>🚶‍♂️ Week-end</h4>
+                        <p>Repos actif</p>
+                        <div class="exercise-meta">
+                            <span>Marche, étirements</span>
+                            <span class="calories">≈ 200 kcal</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div id="month1" class="tab-content">
+            <div class="card card-month1">
+                <h2><span class="month-tag tag-month1">Mois 1</span> Adaptation Technique</h2>
+                
+                <h3>Full Body (4 séances/semaine)</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-fire"></i> Échauffement</h4>
+                        <p>10 min vélo + rotations articulaires</p>
+                        <div class="exercise-meta">
+                            <span>3 séries</span>
+                            <span class="calories">≈ 100 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>5 min de vélo à intensité modérée + 5 min de rotations des épaules, chevilles, poignets et hanches.</p>
+                            <p><strong>Conseil:</strong> Ne négligez pas l'échauffement, il prévient les blessures et améliore la performance.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Presse à cuisses</h4>
+                        <p>3 séries × 12 reps (60-70% RM)</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 180 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Positionnez correctement le dos et les pieds. Descendez jusqu'à 90° de flexion.</p>
+                            <p><strong>Focus:</strong> Contrôlez la descente et poussez avec les talons.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-compress-alt"></i> Écarté machine</h4>
+                        <p>3 séries × 15 reps (Pec Deck)</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 120 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Réglez la hauteur pour que les coudes soient à la hauteur des épaules. Contractez les pectoraux.</p>
+                            <p><strong>Focus:</strong> Maintenez une légère flexion des coudes et contrôlez le mouvement.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands"></i> Tirage poitrine machine</h4>
+                        <p>3 séries × 12 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 140 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Asseyez-vous face à la machine, dos droit. Tirez la barre vers la poitrine en contractant les dorsaux.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands-helping"></i> Développé épaules machine</h4>
+                        <p>3 séries × 12 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 130 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Réglez le siège pour que les poignées soient au niveau des épaules. Poussez vers le haut sans verrouiller les coudes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-dumbbell"></i> Curl biceps machine</h4>
+                        <p>3 séries × 15 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 45s</span>
+                            <span class="calories">≈ 90 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Asseyez-vous, placez les coudes sur le support. Fléchissez les bras en contractant les biceps.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-dumbbell"></i> Extension triceps</h4>
+                        <p>3 séries × 15 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 45s</span>
+                            <span class="calories">≈ 90 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Gardez les coudes près du corps. Étendez les avant-bras jusqu'à contraction complète des triceps.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-heart"></i> Étirements</h4>
+                        <p>10 min d'étirements</p>
+                        <div class="exercise-meta">
+                            <span>Flexibilité</span>
+                            <span class="calories">≈ 40 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Étirez tous les groupes musculaires sollicités pendant la séance. Maintenez chaque étirement 20-30 secondes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-month1">
+                <h2><span class="month-tag tag-month1">Mois 1</span> Objectifs</h2>
+                
+                <div class="progress-container">
+                    <h3>Progression</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-month1" style="width: 33%;">Semaines 1-4</div>
+                    </div>
+                    <p><strong>Focus:</strong> Apprentissage des mouvements, charges modérées</p>
+                </div>
+                
+                <div class="highlight">
+                    <h4>🎯 Priorité du Mois 1</h4>
+                    <p>Maîtriser la technique de tous les exercices avant d'augmenter les charges</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="month2" class="tab-content">
+            <div class="card card-month2">
+                <h2><span class="month-tag tag-month2">Mois 2</span> Phase Hypertrophie</h2>
+                
+                <h3>Lundi - Upper Body (1h30)</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-compress-alt"></i> Écarté machine</h4>
+                        <p>4 séries × 12 reps (Pec Deck)</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 150 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Augmentez légèrement la charge par rapport au mois 1 tout en maintenant une bonne technique.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands"></i> Tirage poitrine</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 160 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Tirez la barre vers le haut de la poitrine en contractant les dorsaux.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands-helping"></i> Développé épaules machine</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 140 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Augmentez la charge progressivement tout en maintenant une bonne forme.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-dumbbell"></i> Curl biceps machine</h4>
+                        <p>3 séries × 12 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 45s</span>
+                            <span class="calories">≈ 100 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Concentrez-vous sur la contraction du biceps en évitant de balancer le corps.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-dumbbell"></i> Extension triceps</h4>
+                        <p>3 séries × 12 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 45s</span>
+                            <span class="calories">≈ 100 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Gardez les coudes fixes près du corps pendant tout le mouvement.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Mardi - Lower Body (1h30)</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Presse à cuisses</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 90s</span>
+                            <span class="calories">≈ 200 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Augmentez la charge progressivement tout en maintenant une bonne forme.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Hack squat</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 90s</span>
+                            <span class="calories">≈ 190 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Gardez le dos droit contre le support. Descendez jusqu'à ce que les cuisses soient parallèles au plateau.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Leg extension</h4>
+                        <p>3 séries × 12 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 130 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Étendez les jambes jusqu'à contraction complète des quadriceps sans décoller les fesses du siège.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Leg curl</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 140 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Fléchissez les jambes en amenant les talons vers les fesses. Gardez le bassin collé au banc.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="month3" class="tab-content">
+            <div class="card card-month3">
+                <h2><span class="month-tag tag-month3">Mois 3</span> Phase Intensification</h2>
+                
+                <h3>Lundi - Upper Body Lourd</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-compress-alt"></i> Écarté machine</h4>
+                        <p>5 séries × 10 reps (charge max contrôlée)</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 90s</span>
+                            <span class="calories">≈ 180 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Utilisez une charge maximale que vous pouvez contrôler parfaitement sur toutes les répétitions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands"></i> Tirage poitrine</h4>
+                        <p>4 séries × 8 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 120s</span>
+                            <span class="calories">≈ 170 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Augmentez la charge et réduisez le nombre de répétitions pour travailler la force.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-hands-helping"></i> Développé épaules machine</h4>
+                        <p>4 séries × 8 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 90s</span>
+                            <span class="calories">≈ 150 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Travaillez avec des charges lourdes tout en maintenant une technique parfaite.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-dumbbell"></i> Curl biceps</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 60s</span>
+                            <span class="calories">≈ 110 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Augmentez la charge tout en maintenant un mouvement contrôlé.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Mardi - Lower Body Lourd</h3>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Presse à cuisses</h4>
+                        <p>5 séries × 8 reps (charge lourde)</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 120s</span>
+                            <span class="calories">≈ 220 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Utilisez des charges lourdes tout en maintenant une forme parfaite.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Hack squat</h4>
+                        <p>4 séries × 8 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 120s</span>
+                            <span class="calories">≈ 200 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Augmentez la charge progressivement tout en maintenant une bonne forme.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4><i class="fas fa-running"></i> Leg curl</h4>
+                        <p>4 séries × 10 reps</p>
+                        <div class="exercise-meta">
+                            <span>Récup: 90s</span>
+                            <span class="calories">≈ 150 kcal</span>
+                        </div>
+                        <button class="toggle-detail">▼ Détails</button>
+                        <div class="exercise-detail">
+                            <p>Concentrez-vous sur la contraction des ischio-jambiers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="conseils" class="tab-content">
+            <div class="card card-conseils">
+                <h2>💡 Conseils Importants</h2>
+                
+                <div class="highlight">
+                    <h4>🎯 Priorité Absolute</h4>
+                    <p>La technique avant la charge - Ne jamais sacrifier la forme pour soulever plus lourd</p>
+                </div>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4>💤 Récupération</h4>
+                        <p>8-9 heures de sommeil par nuit</p>
+                        <div class="exercise-meta">
+                            <span>Importance: ⭐️⭐️⭐️⭐️⭐️</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>💧 Hydratation</h4>
+                        <p>3-4 litres d'eau par jour</p>
+                        <div class="exercise-meta">
+                            <span>Importance: ⭐️⭐️⭐️⭐️⭐️</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>🍗 Nutrition</h4>
+                        <p>160-180g de protéines par jour</p>
+                        <div class="exercise-meta">
+                            <span>Importance: ⭐️⭐️⭐️⭐️⭐️</span>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-card">
+                        <h4>📈 Progression</h4>
+                        <p>Augmenter les charges progressivement</p>
+                        <div class="exercise-meta">
+                            <span>Importance: ⭐️⭐️⭐️⭐️</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight">
+                    <h4>📊 Calories et Prise de Masse</h4>
+                    <p>Pour une prise de masse efficace, visez 3000-3300 calories par jour avec 160-180g de protéines.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 25px 0;">
+            <button class="btn" onclick="window.print()">🖨️ Imprimer</button>
+            <button class="btn" id="showInstallInstructions">📱 Installer l'App</button>
+        </div>
+
+        <div class="footer">
+            <p>📅 Programme sur 12 semaines | 🏋️‍♂️ Focus Sécurité & Isolation</p>
+            <p>⚠️ Consulter un coach pour la correction technique</p>
+        </div>
     </div>
-    
-    <footer>
-        <p>Application de suivi d'entraînement - © 2023</p>
-    </footer>
+
+    <div class="install-instructions" id="installInstructions">
+        <button class="close-instructions" id="closeInstructions">×</button>
+        <h3>📱 Installer l'Application</h3>
+        <p><strong>Sur iOS:</strong></p>
+        <ol>
+            <li>Ouvrez Safari</li>
+            <li>Appuyez sur le bouton de partage <span style="font-size: 1.2em;">⬆️</span></li>
+            <li>Sélectionnez "Sur l'écran d'accueil"</li>
+            <li>Appuyez sur "Ajouter"</li>
+        </ol>
+        <p><strong>Sur Android:</strong></p>
+        <ol>
+            <li>Ouvrez Chrome</li>
+            <li>Appuyez sur les trois points en haut à droite</li>
+            <li>Sélectionnez "Ajouter à l'écran d'accueil"</li>
+            <li>Confirmez l'installation</li>
+        </ol>
+    </div>
 
     <script>
-        function toggleExercise() {
-            const exerciseInfo = document.getElementById('exerciseInfo');
-            const button = document.querySelector('.btn');
-            
-            if (exerciseInfo.style.display === 'block') {
-                exerciseInfo.style.display = 'none';
-                button.textContent = 'Afficher les détails de l\'exercice';
-            } else {
-                exerciseInfo.style.display = 'block';
-                button.textContent = 'Masquer les détails de l\'exercice';
-            }
-        }
+        // Gestion des onglets
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                button.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    button.style.transform = '';
+                }, 150);
+            });
+        });
         
-        function selectIcon(element) {
-            // Retirer la sélection précédente
-            const selected = document.querySelector('.icon-option.selected');
-            if (selected) {
-                selected.classList.remove('selected');
+        // Détails des exercices
+        document.querySelectorAll('.toggle-detail').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = button.closest('.exercise-card');
+                card.classList.toggle('active');
+                
+                if (card.classList.contains('active')) {
+                    button.innerHTML = '<i class="fas fa-chevron-up"></i> Masquer';
+                } else {
+                    button.innerHTML = '<i class="fas fa-chevron-down"></i> Détails';
+                }
+            });
+        });
+        
+        // Fermer les détails en cliquant à l'extérieur
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.exercise-card')) {
+                document.querySelectorAll('.exercise-card').forEach(card => {
+                    card.classList.remove('active');
+                    const button = card.querySelector('.toggle-detail');
+                    if (button) button.innerHTML = '<i class="fas fa-chevron-down"></i> Détails';
+                });
             }
+        });
+        
+        // Instructions d'installation
+        document.getElementById('showInstallInstructions').addEventListener('click', () => {
+            document.getElementById('installInstructions').classList.add('show');
+        });
+        
+        document.getElementById('closeInstructions').addEventListener('click', () => {
+            document.getElementById('installInstructions').classList.remove('show');
+        });
+        
+        // Gestion de l'installation PWA
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
             
-            // Ajouter la sélection à l'élément cliqué
-            element.classList.add('selected');
-            
-            // Afficher une confirmation
-            alert('Icône sélectionnée: ' + element.textContent + '\nCette icône sera utilisée pour votre application.');
+            installButton.addEventListener('click', () => {
+                installButton.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Utilisateur a installé la PWA');
+                    } else {
+                        console.log('Utilisateur a refusé l\'installation');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+        
+        window.addEventListener('appinstalled', () => {
+            installButton.style.display = 'none';
+            deferredPrompt = null;
+        });
+        
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            installButton.style.display = 'none';
         }
     </script>
 </body>
